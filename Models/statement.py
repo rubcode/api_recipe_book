@@ -8,10 +8,10 @@ def excuteStatement(query,values):
     dbCon.commit()
     return {"code":"000","description": "Se ejecuto query correctamente"}
 
-def selectData(query):
+def selectData(query,values = ()):
     dbCon = connect()
     myCursor = dbCon.cursor()
-    myCursor.execute(query)
+    myCursor.execute(query,values)
     column_names = [i[0] for i in myCursor.description]
     data = myCursor.fetchall()
     result = [dict(zip(column_names, row)) for row in data]
