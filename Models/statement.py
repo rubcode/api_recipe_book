@@ -6,7 +6,7 @@ def excuteStatement(query,values):
     query = query
     mycursor.execute(query, values)
     dbCon.commit()
-    return {"code":"000","description": "Se ejecuto query correctamente"}
+    return {"code":"000","description": "Se ejecuto query correctamente","id": mycursor.lastrowid }
 
 def selectData(query,values = ()):
     dbCon = connect()

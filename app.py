@@ -16,6 +16,7 @@ class Recipe(BaseModel):
     nameRecipe: str
     preparation: str
     idCategory: int
+    urlImage: str
     status: int
 
 class Ingredient(BaseModel):
@@ -44,7 +45,7 @@ def getRecipesData():
 
 @app.post("/recipes")
 def addRecipe(recipe: Recipe):
-    response = insertRecipe(recipe.nameRecipe,recipe.preparation,recipe.idCategory)
+    response = insertRecipe(recipe.nameRecipe,recipe.preparation,recipe.idCategory,recipe.urlImage)
     return response
 
 @app.get("/categories")

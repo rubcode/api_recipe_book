@@ -1,7 +1,7 @@
 from Models.statement import *
 
 def getRecipes():
-    query = "SELECT a.id_recipe,a.name_recipe,a.preparation, b.name_category  FROM recipes a, categories b WHERE a.category = b.id_category";
+    query = "SELECT a.id_recipe,a.name_recipe,a.preparation, a.url_image, b.name_category  FROM recipes a, categories b WHERE a.category = b.id_category";
     recipes = selectData(query)
     dataRecipes = recipes["data"]
     for recipe in dataRecipes:
@@ -12,12 +12,12 @@ def getRecipes():
     recipes['data'] = dataRecipes
     return recipes
 
-def insertRecipe(nameRecipe,preparation,idCategory,status = 1):
-    query = "INSERT INTO recipes (name_recipe,preparation,category,status) VALUES(%s,%s,%s,%s)"
-    values = (nameRecipe,preparation,idCategory,status)
+def insertRecipe(nameRecipe,preparation,idCategory,urlImage,status = 1):
+    query = "INSERT INTO recipes (name_recipe,preparation,category,url_image,status) VALUES(%s,%s,%s,%s,%s)"
+    values = (nameRecipe,preparation,idCategory,urlImage,status)
     response = excuteStatement(query,values)
     if(response['code'] == "000"):
-        return {"code": "000","description": "Receta insertada correctamente"}
+        return {"data": {"code": "000","description": "Receta insertada correctamente","id_recipe": response['id']}}
     return response
 
 def insertCategory(nameCategory,status = 1):
@@ -48,5 +48,5 @@ def insertIngredient(nameIngredient,idRecipe,status = 1):
     values = (nameIngredient,idRecipe,status)
     response = excuteStatement(query,values)
     if(response['code'] == "000"):
-        return {"code": "000","description": "Ingrediente insertado correctamente"}
+        return {"data":{"code": "000","description": "Ingrediente insertado correctamente"}}
     return response
